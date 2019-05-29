@@ -123,6 +123,15 @@ class parsingSite {
 			'Mail'		 => '|([a-z._\-0-9]+@[a-z.0-9]+)|xis'
 		);
 		
+		#забирaем машину
+		$parsAuto = '|<a\s+class\s*=\s*"\s*c-car-title\s*c-link" [^>]*> (.*?) <\s*/a\s*>|';
+		
+		#достаем из страници блок с данными пользователя
+		preg_match($parsAuto, $page, $bufferArr);
+		$personalInformationArr['Auto'] = 'https://www.drive2.ru/users/'.$__name; 
+		
+		$personalInformationArr['login'] = $__name; 
+		
 		#в этом массиве будет храниться информация о пользователях
 		$personalInformationArr = array();
 		$page				    = $this->getContents('https://www.drive2.ru/users/'.$__name);
