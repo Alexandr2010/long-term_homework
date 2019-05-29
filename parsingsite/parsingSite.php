@@ -135,8 +135,9 @@ class parsingSite {
 		
 		#достаем из страници блок с данными пользователя
 		preg_match($parsAuto, $page, $bufferArr);
-		$personalInformationArr['Auto'] = $bufferArr[1]; 
-		
+		$personalInformationArr['Auto'] = isset($bufferArr[1])
+			? $bufferArr[1]
+			: '';
 		#достаем из страници блок с данными пользователя
 		preg_match($parsDeterminationData, $page, $bufferArr);
 		
