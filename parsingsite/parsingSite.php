@@ -124,19 +124,19 @@ class parsingSite {
 		);
 		
 		#забирaем машину
-		$parsAuto = '|<a\s+class\s*=\s*"\s*c-car-title\s*c-link" [^>]*> (.*?) <\s*/a\s*>|';
-		
-		#достаем из страници блок с данными пользователя
-		preg_match($parsAuto, $page, $bufferArr);
-		$personalInformationArr['Auto'] = 'https://www.drive2.ru/users/'.$__name; 
-		
-		$personalInformationArr['login'] = $__name; 
+		$parsAuto = '|<a\s+class\s*=\s*"\s*c-car-title\s*c-link" [^>]*> (.*?) <\s*/a\s*>|ixsu';
 		
 		#в этом массиве будет храниться информация о пользователях
 		$personalInformationArr = array();
 		$page				    = $this->getContents('https://www.drive2.ru/users/'.$__name);
 		$bufferArr				= array();
 
+		$personalInformationArr['login'] = $__name; 
+		
+		#достаем из страници блок с данными пользователя
+		preg_match($parsAuto, $page, $bufferArr);
+		$personalInformationArr['Auto'] = $bufferArr[1]; 
+		
 		#достаем из страници блок с данными пользователя
 		preg_match($parsDeterminationData, $page, $bufferArr);
 		
