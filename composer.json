@@ -1,0 +1,14 @@
+{
+    "name": "shirinkin/long-term_homework",
+    "description": "Long-term homework (site parsing) instructions in the readme.txr file",
+    "authors": [
+        {
+            "name": "Alexandr Shirinkin",
+            "email": "alexshirinkin@outlook.com"
+        }
+    ],
+    "autoload": {
+        "classmap": ["parsingSite/parsingSite.php"
+		]
+    }
+}
