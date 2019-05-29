@@ -9,7 +9,7 @@
     ],
     "autoload": {
 	
-        "classmap": ["parsingSite/parsingSite.php"
+        "classmap": ["parsingsite/parsingSite.php"
 		]
 		
     }
