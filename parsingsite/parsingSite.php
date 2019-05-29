@@ -1,5 +1,11 @@
 <?php
 
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 /**
  * Description of parsingSite
  *
@@ -22,10 +28,10 @@ class parsingSite {
 		$linksArr = array();
 
 		#ишет  ссылку на сообщесвто
-		$parsCommunities = '|<\s*a\sclass\s*=\s* "*c-link"* \s* href\s*="*(/communities/[a-z/0-9.?&=]*)"* [^>]*? > |ixs';
+		$parsCommunities = '|<\s*a\sclass\s*=\s* "*c-link\s*c-link--text"* \s* href\s*="*(/communities/[a-z/0-9.?&=]*)"* [^>]*? > |ixs';
 
 		#ищет ссылки пользователей на странице сообщетва
-		$parsPageCommunities = '|<\s*a\s+href\s*="*/users/([a-z\-0-9.?/#&=]*)"* \s*>|ixs';
+		$parsPageCommunities = '|<\s*a\s+ .*? href\s*="*/users/([a-z\-0-9.?/#&=]*)"* .*? \s*>|ixs';
 
 		#ищет ссылку на следующую страничку в блоке
 		$parsNextPage = '|<\s*a\sclass\s*=\s* "*c-pager__link"* \s* rel="*next"*
@@ -101,11 +107,13 @@ class parsingSite {
 
 		#забирает имя воздаст и место жительства
 		$parsDeterminationData = '|
+			
 			<\s*div \s+ class\s*=\s*"c-user-card__info"> \s*
 			(?:<\s*span\s+class\s*=\s*"\s*c-user-card__imp\s*">)* \s*
 			(?:<\s*span\s*>\s*([^<]*)\s* <[^>]*>)*#забираем имя
-			.*? (?:<\s*span\s+ class\s*=\s*"c-user-card__age"\s* [^>]*> (.*?) <\s*/span\s*>\s*<\s*/span\s*>)* #возраст
-			.*?	<\s*span\s*itemprop\s*=\s*"address">\s*<\s*span\s*title\s*="([^"]*)"\s*> #место жительства|ixsu';
+			[^<]* (?:<\s*span\s+ class\s*=\s*"c-user-card__age"\s* [^>]*> (.*?) <\s*/span\s*>\s*<\s*/span\s*>)* #возраст
+			.*?	<\s*span\s*itemprop\s*=\s*"address">\s*<\s*span\s*title\s*="([^"]*)"\s*> #место жительства
+			|ixsu';
 
 		#массив с регулярками ищущими инстаграмм майл и т.д.
 		$parsPersonalInformationArr = array(
@@ -122,7 +130,10 @@ class parsingSite {
 
 		#достаем из страници блок с данными пользователя
 		preg_match($parsDeterminationData, $page, $bufferArr);
-
+		
+		#ссылка на пользователя
+		$personalInformationArr['URL'] = 'https://www.drive2.ru/users/'.$__name; 
+		
 		#записываем имя
 		$personalInformationArr['Name'] = isset($bufferArr[1])
 			? $bufferArr[1]
@@ -170,7 +181,7 @@ class parsingSite {
 		return true;
 	}
 	
-			
+		
 	function getContents($__url){
 		$ch = curl_init();
 		
