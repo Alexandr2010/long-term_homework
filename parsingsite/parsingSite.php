@@ -53,7 +53,7 @@ class parsingSite {
 					: $value.'/blog/';
 
 				#получаем очередную страницу сообщества
-				$page = file_get_contents('https://www.drive2.ru'.$value);
+				$page = $this->getContents('https://www.drive2.ru'.$value);
 				preg_match_all($parsPageCommunities, $page, $matchesArr);
 
 				#добавляем пользователей со страницы, если они не были найдены ранее
@@ -117,7 +117,7 @@ class parsingSite {
 		
 		#в этом массиве будет храниться информация о пользователях
 		$personalInformationArr = array();
-		$page				    = file_get_contents('https://www.drive2.ru/users/'.$__name);
+		$page				    = $this->getContents('https://www.drive2.ru/users/'.$__name);
 		$bufferArr				= array();
 
 		#достаем из страници блок с данными пользователя
@@ -168,5 +168,19 @@ class parsingSite {
 		$__informationUsersArr[$__name] = $personalInformationArr;
 
 		return true;
+	}
+	
+			
+	function getContents($__url){
+		$ch = curl_init();
+		
+		curl_setopt($ch, CURLOPT_HEADER, 0);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_URL, $__url);
+		
+		$data = curl_exec($ch);
+		curl_close($ch);
+		
+		return $data;
 	}
 }
